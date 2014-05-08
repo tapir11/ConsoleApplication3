@@ -2,8 +2,11 @@
 #include <conio.h>
 #include <time.h>
 #include <windows.h>
+#include <stdlib.h>
 
-srand(time(null))
+using namespace std;
+
+
 
 char map[5][13]={
 {'X','X','X','X','X','X','X','X','X','X','X','X','X'},
@@ -11,7 +14,7 @@ char map[5][13]={
 {'X',' ',' ',' ',' ',' ','X','X',' ',' ','X','X','X'},
 {'X','X','X',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},
 {'X','X','X','X','X','X','X','X','X','X','X','X','X'}
-	
+
 };
 
 const char gracz='@';
@@ -43,16 +46,17 @@ position koniecpos;
 void move(int posy,int posx)
 {
 	char colision = map[posy][posx];
-	
+
 	if (colision==' ')
 	{
 		graczposold.y=graczpos.y;
 		graczposold.x=graczpos.x;
-		graczpos.y=posy;
-		graczpos.x=posx;
-		
+		map[posy][posx]=gracz;
+		map[graczposold.y][graczposold.x]=' ';
+
+
 	}
-	
+
 	if (colision=='!')
 	{
 		hp-=30;
@@ -61,30 +65,39 @@ void move(int posy,int posx)
 		if(hp<=0)
 		stop=1;
 	}
-	
-	
+
+
 	//if (collision=='X')
-	
+
 	if (colision=='e')
 	{
-		win=1
+
+		graczposold.y=graczpos.y;
+		graczposold.x=graczpos.x;
+		map[posy][posx]=gracz;
+		map[graczposold.y][graczposold.x]=' ';
+		win=1;
 	}
-	
-	if (collision=='$')
+
+	if (colision=='$')
 	{
-		kasa+=10;
-		
+		pts+=10;
+		graczposold.y=graczpos.y;
+		graczposold.x=graczpos.x;
+		map[posy][posx]=gracz;
+		map[graczposold.y][graczposold.x]=' ';
+
+		do
+		{
+			kasapos.y=1+rand()%5;
+			kasapos.x=1+rand()%13;
+		}while (map[kasapos.y][kasapos.x]='X' && map[kasapos.y][kasapos.x]!=gracz);
 	}
-	
-	
-	
-	
+
+
+
+
 }
-
-
-
-
-
 
 
 void main()
